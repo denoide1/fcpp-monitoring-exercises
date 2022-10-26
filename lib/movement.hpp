@@ -45,7 +45,7 @@ FUN void group_walk(ARGS) { CODE
         // leaders just walk randomly
         vec<2> target = node.net.closest_space(random_rectangle_target(CALL, low, hi));
         old(CALL, target, [&](vec<2> t){
-            real_t dist = follow_target(CALL, node.net.path_to(node.position(), t), max_v, period);
+            real_t dist = follow_target(CALL, node.net.path_to(node.position(), t).first, max_v, period);
             return dist > max_v * period ? t : target;
         });
     } else {
@@ -55,7 +55,7 @@ FUN void group_walk(ARGS) { CODE
         if (old(CALL, true, false))
             node.position() = t; // on the first simulated round
         else
-            follow_target(CALL, node.net.path_to(node.position(), t), max_v, period); // on following rounds
+            follow_target(CALL, node.net.path_to(node.position(), t).first, max_v, period); // on following rounds
     }
 }
 //! @brief Export types used by the group_walk function.
