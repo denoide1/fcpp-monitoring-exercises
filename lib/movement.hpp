@@ -41,6 +41,8 @@ FUN void group_walk(ARGS) { CODE
     device_t leader = node.uid - (node.uid % max_group_size);
     real_t max_v = node.storage(speed{});
     real_t radius = node.storage(offset{});
+    // ensure that node is not within an obstacle
+    node.position() = node.net.closest_space(node.position());
     if (node.uid == leader) {
         // leaders just walk randomly
         vec<2> target = node.net.closest_space(random_rectangle_target(CALL, low, hi));
