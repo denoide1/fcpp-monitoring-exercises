@@ -73,11 +73,11 @@ MAIN() {
     group_walk(CALL);
 
     // compute basic propositions
-    bool cluster = sum_hood(CALL, mux(node.nbr_dist() < 0.1*communication_range, 1, 0)) > 10;
-    bool warning = sum_hood(CALL, mux(cluster, 1, 0)) >= 3; // at least 3 neighbours in a cluster
+    bool cluster = false; //sum_hood(CALL, mux(node.nbr_dist() < 0.1*communication_range, 1, 0)) > 10;
+    bool warning = false; //sum_hood(CALL, mux(cluster, 1, 0)) >= 3; // at least 3 neighbours in a cluster
 
     // sample logic formula
-    bool result = consistency_monitor(CALL, cluster);
+    bool result = false; //consistency_monitor(CALL, cluster);
     node.storage(consistency{}) = result;
 
     // display formula values in the user interface
