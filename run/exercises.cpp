@@ -158,6 +158,7 @@ DECLARE_OPTIONS(list,
 
 } // namespace option
 
+//! @brief Skips printing of map navigator objects.
 std::ostream& operator<<(std::ostream& o, map_navigator const&) {
     return o;
 }
@@ -174,7 +175,7 @@ int main() {
     //! @brief Create the navigator from the obstacles map.
     map_navigator obj = map_navigator("obstacles.png");
     //! @brief The initialisation values (simulation name).
-    auto init_v = common::make_tagged_tuple<option::name, option::texture, option::map_navigator_obj>("Monitoring Exercises", "obstacles.png", obj);
+    auto init_v = common::make_tagged_tuple<option::name, option::texture, option::navigator>("Monitoring Exercises", "obstacles.png", obj);
     //! @brief Construct the network object.
     net_t network{init_v};
     //! @brief Run the simulation until exit.
