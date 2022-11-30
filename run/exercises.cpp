@@ -81,7 +81,7 @@ MAIN() {
     node.storage(consistency{}) = result;
 
     // display formula values in the user interface
-    node.storage(node_size{}) = result ? 10 : 20;
+    node.storage(node_size{}) = node.uid % max_group_size == 0 ? 20 : 0; //result ? 10 : 20;
     node.storage(node_color{}) = color(cluster ? RED : GREEN);
     node.storage(node_shape{}) = warning ? shape::cube : shape::sphere;
 }
@@ -138,10 +138,12 @@ DECLARE_OPTIONS(list,
     shape_tag<node_shape>, // the shape of a node is read from this tag in the store
     size_tag<node_size>,   // the size  of a node is read from this tag in the store
     color_tag<node_color>, // the color of a node is read from this tag in the store
-    spawn_group<0, 1,   0, 20>, // group 0: a single node biking
-    spawn_group<1, 20, 50,  0>, // group 1: a large group staying still
+    spawn_group<0, 1,   0, 40>, // group 0: a single node motorbiking
+    spawn_group<1, 20, 50,  1>, // group 1: a large group staying almost still
     spawn_group<2, 10, 20,  5>, // group 2: a medium sized, tightly packed group walking
-    spawn_group<3, 10, 80,  5>  // group 3: a medium sized, loosely packed group walking
+    spawn_group<3, 10, 80, 10>, // group 3: a medium sized, loosely packed group running
+    spawn_group<4, 4,  10, 20>, // group 4: a small group biking
+    spawn_group<5, 7,  30,  3>  // group 5: a small group strolling
     // add groups as you wish
     /**
      * realistic urban speeds:

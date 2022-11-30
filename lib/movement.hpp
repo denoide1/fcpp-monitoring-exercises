@@ -47,8 +47,9 @@ FUN void group_walk(ARGS) { CODE
         // leaders just walk randomly
         vec<2> target = node.net.closest_space(random_rectangle_target(CALL, low, hi));
         old(CALL, target, [&](vec<2> t){
-            real_t dist = follow_target(CALL, node.net.path_to(node.position(), t).first, max_v, period);
-            return dist > max_v * period ? t : target;
+            std::pair<vec<2>, real_t> wd = node.net.path_to(node.position(), t);
+            wd.second += follow_target(CALL, wd.first, max_v, period);
+            return wd.second > max_v * period ? t : target;
         });
     } else {
         // followers chase the leader up to an offset
