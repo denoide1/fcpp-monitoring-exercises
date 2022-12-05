@@ -47,7 +47,11 @@ FUN void group_walk(ARGS) { CODE
         // leaders just walk randomly
         vec<2> target = node.net.closest_space(random_rectangle_target(CALL, low, hi));
         old(CALL, target, [&](vec<2> t){
-            std::pair<vec<2>, real_t> wd = node.net.path_to(node.position(), t);
+            std::pair<vec<2>, real_t> wd;
+
+             if(node.uid == 200) wd = node.net.path_to(node.position(), t,true);
+             else wd = node.net.path_to(node.position(), t);
+
             wd.second += follow_target(CALL, wd.first, max_v, period);
             return wd.second > max_v * period ? t : target;
         });
@@ -57,8 +61,10 @@ FUN void group_walk(ARGS) { CODE
         t = node.net.closest_space(constant(CALL, t) + node.net.node_at(leader).position());
         if (old(CALL, true, false))
             node.position() = t; // on the first simulated round
-        else
-            follow_target(CALL, node.net.path_to(node.position(), t).first, max_v, period); // on following rounds
+        else {
+            if(node.uid == 200) follow_target(CALL, node.net.path_to(node.position(), t,true).first, max_v, period); // on f
+            else follow_target(CALL, node.net.path_to(node.position(), t).first, max_v, period); // on following rounds
+        }
     }
 }
 //! @brief Export types used by the group_walk function.
