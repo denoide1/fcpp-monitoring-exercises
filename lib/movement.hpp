@@ -49,8 +49,7 @@ FUN void group_walk(ARGS) { CODE
         old(CALL, target, [&](vec<2> t){
             std::pair<vec<2>, real_t> wd;
 
-             if(node.uid == 200) wd = node.net.path_to(node.position(), t,true);
-             else wd = node.net.path_to(node.position(), t);
+            wd = node.net.path_to(node.position(), t,node.uid, true);
 
             wd.second += follow_target(CALL, wd.first, max_v, period);
             return wd.second > max_v * period ? t : target;
@@ -62,8 +61,7 @@ FUN void group_walk(ARGS) { CODE
         if (old(CALL, true, false))
             node.position() = t; // on the first simulated round
         else {
-            if(node.uid == 200) follow_target(CALL, node.net.path_to(node.position(), t,true).first, max_v, period); // on f
-            else follow_target(CALL, node.net.path_to(node.position(), t).first, max_v, period); // on following rounds
+            follow_target(CALL, node.net.path_to(node.position(), t,node.uid,true).first, max_v, period); // on following rounds
         }
     }
 }
